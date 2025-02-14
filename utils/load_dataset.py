@@ -3,6 +3,17 @@ import os
 from dotenv import load_dotenv
 from roboflow import Roboflow
 
+def get_roboflow_api_key() -> str:
+    """
+    Get Roboflow API Key from .env file
+
+    Returns:
+    - ROBOFLOW_API_KEY: str - Roboflow API Key
+    """
+    load_dotenv('../.env.local')
+    ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
+    return ROBOFLOW_API_KEY
+
 def load_dataset(workspace_name: str = "roboflow-jvuqo", project_name: str = "football-players-detection-3zvbc", version_number: int = 12) -> str:
     """
     Load dataset from Roboflow if not exist
@@ -18,8 +29,7 @@ def load_dataset(workspace_name: str = "roboflow-jvuqo", project_name: str = "fo
     """
     if not os.path.exists('./datasets'):
         os.makedirs('./datasets')
-        load_dotenv('../.env.local')
-        ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
+        ROBOFLOW_API_KEY = get_roboflow_api_key()
         rf = Roboflow(api_key=ROBOFLOW_API_KEY)
         project = rf.workspace(workspace_name).project(project_name)
         version = project.version(version_number)

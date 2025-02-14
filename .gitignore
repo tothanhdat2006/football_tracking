@@ -1,4 +1,4 @@
 /datasets
 /venv
 /runs
-.env.local
+.env
