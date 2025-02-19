@@ -19,7 +19,7 @@ def get_args():
     parser.add_argument("--video", help="Path to video", type=str, default="./datasets/video1.mp4")
     return parser.parse_args()
 
-def detect_and_annotate(PLAYER_DETECTION_MODEL, frame: cv2.VideoCapture, team_classifier: TeamClassifier) -> cv2.VideoCapture | List[sv.Detections]:
+def detect_and_annotate(PLAYER_DETECTION_MODEL, frame: cv2.VideoCapture, team_classifier: TeamClassifier, tracker: sv.ByteTrack) -> cv2.VideoCapture | List[sv.Detections]:
     '''
     Detect and annotate players, goalkeepers and referees on the frame
 
@@ -27,6 +27,7 @@ def detect_and_annotate(PLAYER_DETECTION_MODEL, frame: cv2.VideoCapture, team_cl
         PLAYER_DETECTION_MODEL: Model for detecting players, goalkeepers and referees
         frame (cv2.VideoCapture): Frame to detect and annotate
         team_classifier (TeamClassifier): Classifier for classifying team of players
+        tracker (sv.ByteTrack): Tracker for tracking players, goalkeepers and referees
     
     Returns:
         cv2.VideoCapture: Annotated frame
@@ -51,9 +52,6 @@ def detect_and_annotate(PLAYER_DETECTION_MODEL, frame: cv2.VideoCapture, team_cl
         height=25,
         outline_thickness=1
     )
-
-    tracker = sv.ByteTrack()
-    tracker.reset()
 
     # Get detections for each objects
     all_detections = get_detections(PLAYER_DETECTION_MODEL, frame)
@@ -206,8 +204,10 @@ if __name__ == "__main__":
     pitch_writer = None
 
     frame_generator = sv.get_video_frames_generator(DetectionConfig.SOURCE_VIDEO_PATH)
+    tracker = sv.ByteTrack()
+    tracker.reset()
     for frame in tqdm(frame_generator, desc="Processing frames"):
-        annotated_frame, detections = detect_and_annotate(PLAYER_DETECTION_MODEL, frame, team_classifier)
+        annotated_frame, detections = detect_and_annotate(PLAYER_DETECTION_MODEL, frame, team_classifier, tracker)
         pitch_view = draw_pitch_map(FIELD_DETECTION_MODEL, frame, detections)
 
         annotated_writer.write(annotated_frame)
