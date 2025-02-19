@@ -3,14 +3,14 @@ A project about using Deep Learning model to analyze track and analyze football 
 ## What?
 This project focuses on building a tracking system used in football analysis. What I plan to achive:
 
-- [x] Detecting players, goalkeepers, referees and balls (in progress) (easy)
-- [x] Keeping track of players' ID (in progress)                       (easy)
-- [x] Tracking ball movement (in progress)                             (easy)
-- [ ] Analyzing players' ball time (in progress)                       (medium)
-- [ ] Re-identification after transition (in progress)                 (hard)
-- [ ] Predict players' movement on map (in progress)                   (hard) 
-- [ ] Map of players (in progress)                                     (hard)
-- [ ] Heatmap of players (in progress)                                 (hard)
+- [x] Detecting players, goalkeepers, referees and balls               (easy)
+- [x] Keeping track of players' ID                                     (easy)
+- [x] Tracking ball movement                                           (easy)
+- [ ] Analyzing players' ball time                                     (medium)
+- [ ] Re-identification after transition                               (hard)
+- [ ] Predict players' movement on map                                 (hard) 
+- [x] Map of players                                                   (hard)
+- [ ] Heatmap of players                                               (hard)
 
 ## Ideas
 - Using yolo11 to detect players, goalkeepers, referees and balls
